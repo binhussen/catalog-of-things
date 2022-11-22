@@ -32,7 +32,7 @@ class Data
     end
   end
 
-  def display_authors
+  def load_authors
     return unless File.exist?('./data/authors.json')
 
     authors = JSON.parse(File.read('./data/authors.json'))
@@ -42,7 +42,7 @@ class Data
     end
   end
 
-  def display_games
+  def load_games
     return unless File.exist?('./data/games.json')
 
     games = JSON.parse(File.read('./data/games.json'))
