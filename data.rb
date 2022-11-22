@@ -7,6 +7,8 @@ class Data
   def initialize
     @authors = []
     @games = []
+    @books = []
+    @labels = []
   end
 
   def add_author(author)
@@ -32,6 +34,18 @@ class Data
     end
   end
 
+  def add_book(book)
+    new_book = { id: book.id, publish_date: book.publish_date, publisher: book.publisher,
+                 cover_state: book.cover_state }
+    if File.exist?('./data/books.json')
+      books = JSON.parse(File.read('./data/books.json'))
+      books << new_book
+      File.write('./data/books.json', JSON.pretty_generate(books))
+    else
+      File.write('./data/books.json', JSON.pretty_generate([new_book]))
+    end
+  end
+
   def load_authors
     return unless File.exist?('./data/authors.json')
 
@@ -51,6 +65,26 @@ class Data
       new_author = @authors.select { |author| author.id == game['author_id'] }[0]
       new_game.add_author(new_author)
       @games << new_game
+    end
+  end
+
+  def load_books
+    return unless File.exist?('./data/books.json')
+
+    books = JSON.parse(File.read('./data/books.json'))
+    books.each do |book|
+      new_book = Book.new(book['id'], book['publish_date'], book['publisher'], book['cover_state'])
+      @books << new_book
+    end
+  end
+
+  def load_labels
+    return unless File.exist?('./data/labels.json')
+
+    labels = JSON.parse(File.read('./data/labels.json'))
+    labels.each do |label|
+      new_label = Label.new(label['id'], label['title'], label['color'])
+      @books << new_label
     end
   end
 end
