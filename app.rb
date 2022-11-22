@@ -1,6 +1,7 @@
 require './model/book'
 require './model/game'
 require './model/music_album'
+require './model/genre'
 require './model/author'
 require './data'
 
@@ -9,6 +10,8 @@ class App
     @data = Data.new
     @data.load_authors
     @data.load_games
+    @data.load_albums
+    @data.load_genres
   end
 
   def add_author
@@ -52,6 +55,46 @@ class App
     @data.games.each_with_index do |game, index|
       puts "#{index + 1}) Author: #{game.author.first_name} #{game.author.last_name}"
       puts "Multiplayer: #{game.multiplayer}, Last played: #{game.last_played_at}, Publish date: #{game.publish_date}"
+    end
+  end
+
+  def add_album
+    puts 'Add New Album'
+    puts 'Publish Date: [YYYY-MM-DD]'
+    date = gets.chomp
+    puts 'Can be archived? [Y/N]'
+    archived = gets.chomp.upcase == 'Y'
+    puts 'On spotify? [Y/N]'
+    spotify = gets.chomp.upcase == 'Y'
+    album = MusicAlbum.new(date, archived, spotify)
+    genre = add_genre
+    genre.add_item(album)
+    @data.albums << album
+    puts 'Album created successfully'
+  end
+
+  def add_genre
+    puts "Add Genre\n\n"
+    puts 'Genre name:'
+    genre_name = gets.chomp
+    genre = Genre.new(genre_name)
+    @data.genres << genre
+    genre
+  end
+
+  def display_genres
+    return puts 'No genres found' if @data.genres.empty?
+
+    @data.genres.each_with_index do |genre, index|
+      puts "#{index + 1}) Name: #{genre.name}"
+    end
+  end
+
+  def display_albums
+    return puts 'No albums found' if @data.albums.empty?
+
+    @data.albums.each_with_index do |album, index|
+      puts "#{index + 1}) Publish date: #{album.publish_date}, Archived: #{album.archived}, On spotify: #{album.on_spotify}"
     end
   end
 end
