@@ -9,6 +9,17 @@ class App
     @data = Data.new
     @data.load_authors
     @data.load_games
+    @data.load_books
+    @data.load_labels
+  end
+
+  def inputs(show)
+    outputs = []
+    show.each do |s|
+      print s
+      outputs.push(gets.chomp)
+    end
+    outputs
   end
 
   def add_author
@@ -38,6 +49,14 @@ class App
     puts 'Game created successfully'
   end
 
+  def add_book
+    outputs = inputs(['Enter publish date', 'Enter publisher', 'Enter cover state'])
+    new_book = Book.new(nil, outputs[0], outputs[1], outputs[2])
+    @data.add_book(new_book)
+    @data.books << new_book
+    new_book
+  end
+
   def display_authors
     return puts 'No authors found' if @data.authors.empty?
 
@@ -52,6 +71,23 @@ class App
     @data.games.each_with_index do |game, index|
       puts "#{index + 1}) Author: #{game.author.first_name} #{game.author.last_name}"
       puts "Multiplayer: #{game.multiplayer}, Last played: #{game.last_played_at}, Publish date: #{game.publish_date}"
+    end
+  end
+
+  def display_books
+    return puts 'No labels found' if @data.books.empty?
+
+    @data.books.each_with_index do |book, index|
+      puts "#{index + 1}) Id: #{book.id} Publish Date: #{book.publish_date}"
+      puts "Publisher: #{book.publisher}, Cover State: #{book.cover_state}"
+    end
+  end
+
+  def display_labels
+    return puts 'No labels found' if @data.labels.empty?
+
+    @data.labels.each_with_index do |label, index|
+      puts "#{index + 1}) Id: #{label.id} Title: #{label.title} Color: #{label.color}"
     end
   end
 end
