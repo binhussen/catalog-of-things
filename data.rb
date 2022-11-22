@@ -1,12 +1,16 @@
 require 'json'
 require_relative './model/author'
 require_relative './model/game'
+require_relative './model/music_album'
+require_relative './model/genre'
 class Data
-  attr_accessor :games, :authors
+  attr_accessor :games, :authors, :albums, :genres
 
   def initialize
     @authors = []
     @games = []
+    @albums = []
+    @genres = []
   end
 
   def add_author(author)
@@ -51,6 +55,48 @@ class Data
       new_author = @authors.select { |author| author.id == game['author_id'] }[0]
       new_game.add_author(new_author)
       @games << new_game
+    end
+  end
+
+  def add_album(album)
+    new_album = { id: album.id, publish_date: album.publish_date, archived: album.archived, on_spotify: album.on_spotify }
+    if File.exist?('./data/albums.json')
+      albums = JSON.parse(File.read('./data/albums.json'))
+      albums << new_album
+      File.write('./data/albums.json', JSON.pretty_generate(albums))
+    else
+      File.write('./data/albums.json', JSON.pretty_generate([new_album]))
+    end
+  end
+
+  def load_albums
+    return unless File.exist?('./data/albums.json')
+
+    albums = JSON.parse(File.read('./data/albums.json'))
+    albums.each do |album|
+      new_album = MusicAlbum.new(album['id'], album['publish_date'], album['archived'], album['on_spotify'])
+      @albums << new_album
+    end
+  end
+
+  def add_genre(genre)
+    new_genre = { id: genre.id, name: genre.name }
+    if File.exist?('./data/genres.json')
+      genres = JSON.parse(File.read('./data/genres.json'))
+      genres << new_genre
+      File.write('./data/genres.json', JSON.pretty_generate(genres))
+    else
+      File.write('./data/genres.json', JSON.pretty_generate([new_genre]))
+    end
+  end
+
+  def load_genres
+    return unless File.exist?('./data/genres.json')
+
+    genres = JSON.parse(File.read('./data/genres.json'))
+    genres.each do |genre|
+      new_genre = Genre.new(genre['id'], genre['name'])
+      @genres << new_genre
     end
   end
 end
