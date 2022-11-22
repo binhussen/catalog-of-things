@@ -4,6 +4,14 @@ create TABLE genre (
   items text[],
 );
 
+create TABLE music_albums (
+  id INT PRIMARY KEY NOT NULL,
+  on_spotify BOOLEAN,
+  publish_date DATE,
+  archived BOOLEAN,
+  genre_id INT REFERENCES genre(id),
+)
+
 create TABLE book (
   publisher varchar(100),
   cover_state varchar(100)
