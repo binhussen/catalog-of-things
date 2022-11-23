@@ -2,6 +2,7 @@ require './model/book'
 require './model/game'
 require './model/music_album'
 require './model/author'
+require './model/label'
 require './data'
 
 class App
@@ -9,6 +10,17 @@ class App
     @data = Data.new
     @data.load_authors
     @data.load_games
+    @data.load_books
+    @data.load_labels
+  end
+
+  def inputs(show)
+    outputs = []
+    show.each do |s|
+      print s
+      outputs.push(gets.chomp)
+    end
+    outputs
   end
 
   def add_author
@@ -38,6 +50,33 @@ class App
     puts 'Game created successfully'
   end
 
+  def add_book
+    puts 'Enter publisher'
+    publisher = gets.chomp
+    puts 'Enter publish date in format (YYYY-MM-DD)'
+    publish_date = Date.parse(gets.chomp)
+    puts 'Enter the cover state'
+    cover_state = gets.chomp
+    new_book = Book.new(nil, publish_date, publisher, cover_state)
+    puts "Enter label details\n"
+    new_label = add_label
+    new_book.add_label(new_label)
+    @data.add_book(new_book)
+    @data.books << new_book
+    puts 'Book created successfully'
+  end
+
+  def add_label
+    puts 'Enter title'
+    title = gets.chomp
+    puts 'Enter color'
+    color = gets.chomp
+    new_label = Label.new(nil, title, color)
+    @data.add_label(new_label)
+    @data.labels << new_label
+    new_label
+  end
+
   def display_authors
     return puts 'No authors found' if @data.authors.empty?
 
@@ -52,6 +91,23 @@ class App
     @data.games.each_with_index do |game, index|
       puts "#{index + 1}) Author: #{game.author.first_name} #{game.author.last_name}"
       puts "Multiplayer: #{game.multiplayer}, Last played: #{game.last_played_at}, Publish date: #{game.publish_date}"
+    end
+  end
+
+  def display_books
+    return puts 'No labels found' if @data.books.empty?
+
+    @data.books.each_with_index do |book, index|
+      puts "#{index + 1}) Label: #{book.label.title} #{book.label.color}"
+      puts "Publisher: #{book.publisher}, Publish date: #{book.publish_date} Cover_state: #{book.cover_state}"
+    end
+  end
+
+  def display_labels
+    return puts 'No labels found' if @data.labels.empty?
+
+    @data.labels.each_with_index do |label, index|
+      puts "#{index + 1}) Id: #{label.id} Title: #{label.title} Color: #{label.color}"
     end
   end
 end

@@ -5,9 +5,19 @@ create TABLE genre (
 );
 
 create TABLE book (
+  id INT PRIMARY KEY NOT NULL,
+  publish_date DATE,
   publisher varchar(100),
   cover_state varchar(100)
 );
+
+create TABLE label (
+  id INT PRIMARY KEY NOT NULL,
+  title varchar(100),
+  color varchar(20),
+  items text[],
+);
+
 
 CREATE TABLE author(
     id SERIAL PRIMARY KEY,
