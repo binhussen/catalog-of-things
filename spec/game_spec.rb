@@ -29,7 +29,7 @@ describe Game do
       expect(game.publish_date).to eq '2010-10-10'
     end
 
-    it 'should return last player at' do
+    it 'should return last played at' do
       game = Game.new(1, '2010-10-10', true, '2010-10-10')
       expect(game.last_played_at).to eq '2010-10-10'
     end

@@ -3,6 +3,7 @@ require './model/game'
 require './model/music_album'
 require './model/genre'
 require './model/author'
+require './model/label'
 require './data'
 
 class App
@@ -12,6 +13,17 @@ class App
     @data.load_games
     @data.load_albums
     @data.load_genres
+    @data.load_books
+    @data.load_labels
+  end
+
+  def inputs(show)
+    outputs = []
+    show.each do |s|
+      print s
+      outputs.push(gets.chomp)
+    end
+    outputs
   end
 
   def add_author
@@ -39,6 +51,33 @@ class App
     @data.add_game(new_game)
     @data.games << new_game
     puts 'Game created successfully'
+  end
+
+  def add_book
+    puts 'Enter publisher'
+    publisher = gets.chomp
+    puts 'Enter publish date in format (YYYY-MM-DD)'
+    publish_date = Date.parse(gets.chomp)
+    puts 'Enter the cover state'
+    cover_state = gets.chomp
+    new_book = Book.new(nil, publish_date, publisher, cover_state)
+    puts "Enter label details\n"
+    new_label = add_label
+    new_book.add_label(new_label)
+    @data.add_book(new_book)
+    @data.books << new_book
+    puts 'Book created successfully'
+  end
+
+  def add_label
+    puts 'Enter title'
+    title = gets.chomp
+    puts 'Enter color'
+    color = gets.chomp
+    new_label = Label.new(nil, title, color)
+    @data.add_label(new_label)
+    @data.labels << new_label
+    new_label
   end
 
   def display_authors
@@ -95,6 +134,22 @@ class App
 
     @data.albums.each_with_index do |album, index|
       puts "#{index + 1}) Publish date: #{album.publish_date}, Archived: #{album.archived}, On spotify: #{album.on_spotify}"
+  end
+    
+  def display_books
+    return puts 'No labels found' if @data.books.empty?
+
+    @data.books.each_with_index do |book, index|
+      puts "#{index + 1}) Label: #{book.label.title} #{book.label.color}"
+      puts "Publisher: #{book.publisher}, Publish date: #{book.publish_date} Cover_state: #{book.cover_state}"
+    end
+  end
+
+  def display_labels
+    return puts 'No labels found' if @data.labels.empty?
+
+    @data.labels.each_with_index do |label, index|
+      puts "#{index + 1}) Id: #{label.id} Title: #{label.title} Color: #{label.color}"
     end
   end
 end
