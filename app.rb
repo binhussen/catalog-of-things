@@ -2,6 +2,7 @@ require './model/book'
 require './model/game'
 require './model/music_album'
 require './model/author'
+require './model/label'
 require './data'
 
 class App
@@ -50,11 +51,30 @@ class App
   end
 
   def add_book
-    outputs = inputs(['Enter publish date', 'Enter publisher', 'Enter cover state'])
-    new_book = Book.new(nil, outputs[0], outputs[1], outputs[2])
+    puts 'Enter publisher'
+    publisher = gets.chomp
+    puts 'Enter publish date in format (YYYY-MM-DD)'
+    publish_date = Date.parse(gets.chomp)
+    puts 'Enter the cover state'
+    cover_state = gets.chomp
+    new_book = Book.new(nil, publish_date, publisher, cover_state)
+    puts "Enter label details\n"
+    new_label = add_label
+    new_book.add_label(new_label)
     @data.add_book(new_book)
     @data.books << new_book
-    new_book
+    puts 'Book created successfully'
+  end
+
+  def add_label
+    puts 'Enter title'
+    title = gets.chomp
+    puts 'Enter color'
+    color = gets.chomp
+    new_label = Label.new(nil, title, color)
+    @data.add_label(new_label)
+    @data.labels << new_label
+    new_label
   end
 
   def display_authors
@@ -78,8 +98,8 @@ class App
     return puts 'No labels found' if @data.books.empty?
 
     @data.books.each_with_index do |book, index|
-      puts "#{index + 1}) Id: #{book.id} Publish Date: #{book.publish_date}"
-      puts "Publisher: #{book.publisher}, Cover State: #{book.cover_state}"
+      puts "#{index + 1}) Label: #{book.label.title} #{book.label.color}"
+      puts "Publisher: #{book.publisher}, Publish date: #{book.publish_date} Cover_state: #{book.cover_state}"
     end
   end
 
