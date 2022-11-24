@@ -38,6 +38,16 @@ cd catalog-of-things
 - Twitter: [@DestaWubishet](https://twitter.com/DestaWubishet)
 - LinkedIn: https://www.linkedin.com/in/desta-legesse-w-509844213/
 
+👤 **Peter Njuguna**
+
+- GitHub: [@githubhandle](https://github.com/peterboro)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/peter-boro-njuguna/)
+
+👤 **Mohammed Hussen**
+
+- GitHub: [@githubhandle](https://github.com/binhussen)
+- LinkedIn: [LinkedIn]https://www.linkedin.com/in/binhussen/
+
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!
