@@ -83,7 +83,7 @@ class Data
       @games << new_game
     end
   end
-  
+
   def add_album(album)
     new_album = { id: album.id, publish_date: album.publish_date, archived: album.archived, on_spotify: album.on_spotify }
     if File.exist?('./data/albums.json')
@@ -123,7 +123,9 @@ class Data
     genres.each do |genre|
       new_genre = Genre.new(genre['id'], genre['name'])
       @genres << new_genre
-      
+    end
+  end
+
   def load_books
     return unless File.exist?('./data/books.json')
 

@@ -134,8 +134,9 @@ class App
 
     @data.albums.each_with_index do |album, index|
       puts "#{index + 1}) Publish date: #{album.publish_date}, Archived: #{album.archived}, On spotify: #{album.on_spotify}"
+    end
   end
-    
+
   def display_books
     return puts 'No labels found' if @data.books.empty?
 
