@@ -9,7 +9,7 @@ class Author
     @items = []
   end
 
-  def add_item(item)
+  def add_author(item)
     @items << item
     item.add_author(self)
   end

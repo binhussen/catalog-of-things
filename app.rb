@@ -40,10 +40,10 @@ class App
   def add_game
     puts 'Is it multiplayer [Y / N]'
     multiplayer = gets.chomp.downcase == 'y'
-    puts 'Enter last played at in format (YYYY-MM-DD)'
-    last_played_at = Date.parse(gets.chomp)
-    puts 'Enter the publish date in format (YYYY-MM-DD)'
-    publish_date = Date.parse(gets.chomp)
+    puts 'Enter last played at:'
+    last_played_at = gets.chomp
+    puts 'Enter the publish date in:'
+    publish_date = gets.chomp
     new_game = Game.new(nil, publish_date, multiplayer, last_played_at)
     puts "Enter author details\n"
     new_author = add_author
@@ -56,8 +56,8 @@ class App
   def add_book
     puts 'Enter publisher'
     publisher = gets.chomp
-    puts 'Enter publish date in format (YYYY-MM-DD)'
-    publish_date = Date.parse(gets.chomp)
+    puts 'Enter publish date'
+    publish_date = gets.chomp
     puts 'Enter the cover state'
     cover_state = gets.chomp
     new_book = Book.new(nil, publish_date, publisher, cover_state)
@@ -99,26 +99,27 @@ class App
 
   def add_album
     puts 'Add New Album'
-    puts 'Publish Date: [YYYY-MM-DD]'
+    puts 'Publish Date:'
     date = gets.chomp
-    puts 'Can be archived? [Y/N]'
-    archived = gets.chomp.upcase == 'Y'
     puts 'On spotify? [Y/N]'
     spotify = gets.chomp.upcase == 'Y'
-    album = MusicAlbum.new(date, archived, spotify)
-    genre = add_genre
-    genre.add_item(album)
-    @data.albums << album
+    new_album = MusicAlbum.new(date, spotify, nil)
+    puts "Enter Gener details\n"
+    new_genre = add_genre
+    new_album.add_genre(new_genre)
+    @data.add_album(new_album)
+    @data.albums << new_album
     puts 'Album created successfully'
   end
 
   def add_genre
-    puts "Add Genre\n\n"
+    puts "Add Genre\n"
     puts 'Genre name:'
     genre_name = gets.chomp
-    genre = Genre.new(genre_name)
-    @data.genres << genre
-    genre
+    new_genre = Genre.new(nil, genre_name)
+    @data.add_genre(new_genre)
+    @data.genres << new_genre
+    new_genre
   end
 
   def display_genres
@@ -133,7 +134,8 @@ class App
     return puts 'No albums found' if @data.albums.empty?
 
     @data.albums.each_with_index do |album, index|
-      puts "#{index + 1}) Publish date: #{album.publish_date}, Archived: #{album.archived}, On spotify: #{album.on_spotify}"
+      puts "#{index + 1}) Genre: #{album.genre.name} , On spotify: #{album.on_spotify}"
+      puts "Publish date: #{album.publish_date}"
     end
   end
 

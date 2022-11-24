@@ -1,29 +1,23 @@
 require_relative '../model/genre'
 
 describe Genre do
-  before(:each) do
-    @genre = Genre.new('Rap')
+  before :each do
+    @genre1 = Genre.new(1, 'Rap')
+    @genre2 = Genre.new(2, 'Adventure')
   end
 
   it 'should be an instance of Genre' do
-    expect(@genre).to be_an_instance_of(Genre)
-  end
-
-  it 'should have a name' do
-    expect(@genre.name).to eq('Rap')
+    expect(@genre1).to be_instance_of Genre
+    expect(@genre2).to be_instance_of Genre
   end
 
   it 'should have an id' do
-    expect(@genre.id).not_to be_nil
+    genre = Genre.new(1, 'Rap')
+    expect(genre.id).to eq 1
   end
 
-  it 'should have an empty array of items' do
-    expect(@genre.item).to eq([])
-  end
-
-  it 'should add an item to the array of items' do
-    item = double('item')
-    @genre.add_item(item)
-    expect(@genre.item).to eq([item])
+  it 'should have a name' do
+    genre = Genre.new(1, 'Rap')
+    expect(genre.name).to eq 'Rap'
   end
 end

@@ -3,6 +3,8 @@ require_relative './model/author'
 require_relative './model/game'
 require_relative './model/music_album'
 require_relative './model/genre'
+require_relative './model/label'
+require_relative './model/book'
 
 class Data
   attr_accessor :games, :authors, :albums, :genres, :books, :labels
@@ -78,14 +80,14 @@ class Data
     games = JSON.parse(File.read('./data/games.json'))
     games.each do |game|
       new_game = Game.new(game['id'], game['publish_date'], game['multiplayer'], game['last_played_at'])
-      new_author = @authors.select { |author| author.id == game['author_id'] }[0]
+      new_author = @authors.find { |author| author.id == game['author_id'] }
       new_game.add_author(new_author)
       @games << new_game
     end
   end
 
   def add_album(album)
-    new_album = { id: album.id, publish_date: album.publish_date, archived: album.archived, on_spotify: album.on_spotify }
+    new_album = { id: album.id, publish_date: album.publish_date, on_spotify: album.on_spotify, genre_id: album.genre.id }
     if File.exist?('./data/albums.json')
       albums = JSON.parse(File.read('./data/albums.json'))
       albums << new_album
@@ -100,7 +102,9 @@ class Data
 
     albums = JSON.parse(File.read('./data/albums.json'))
     albums.each do |album|
-      new_album = MusicAlbum.new(album['id'], album['publish_date'], album['archived'], album['on_spotify'])
+      new_album = MusicAlbum.new(album['publish_date'], album['on_spotify'], album['id'])
+      new_genre = @genres.find { |genre| genre.id == album['genre_id'] }
+      new_album.add_genre(new_genre)
       @albums << new_album
     end
   end
@@ -132,7 +136,7 @@ class Data
     books = JSON.parse(File.read('./data/books.json'))
     books.each do |book|
       new_book = Book.new(book['id'], book['publish_date'], book['publisher'], book['cover_state'])
-      new_label = @labels.select { |label| label.id == book['label_id'] }[0]
+      new_label = @labels.find { |label| label.id == book['label_id'] }
       new_book.add_label(new_label)
       @books << new_book
     end
