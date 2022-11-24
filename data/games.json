@@ -1,16 +1,9 @@
 [
   {
-    "id": "12",
+    "id": "2016-03-11",
     "publish_date": null,
-    "multiplayer": false,
-    "last_played_at": "12",
-    "author_id": 232
-  },
-  {
-    "id": "45",
-    "publish_date": null,
-    "multiplayer": false,
-    "last_played_at": "45",
-    "author_id": 146
+    "multiplayer": true,
+    "last_played_at": "2018-05-19",
+    "author_id": 88
   }
 ]

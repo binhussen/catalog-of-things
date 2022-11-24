@@ -140,10 +140,11 @@ class App
   end
 
   def display_books
-    return puts 'No labels found' if @data.books.empty?
+    return puts 'No books found' if @data.books.empty?
 
     @data.books.each_with_index do |book, index|
-      puts "#{index + 1}) Publisher: #{book.publisher}, Publish date: #{book.publish_date}, Cover state: #{book.cover_state}"
+      puts "#{index + 1}) Publisher: #{book.publisher}, Publish date: #{book.publish_date},"
+      puts "Cover state: #{book.cover_state}"
     end
   end
 

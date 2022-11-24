@@ -1,16 +1,9 @@
 [
   {
-    "id": "12",
+    "id": "2010-10-09",
     "publish_date": null,
-    "publisher": "8",
-    "cover_state": "12",
-    "label_id": 73
-  },
-  {
-    "id": "45",
-    "publish_date": null,
-    "publisher": "45",
-    "cover_state": "45",
-    "label_id": 43
+    "publisher": "McMillan",
+    "cover_state": "bad",
+    "label_id": 487
   }
 ]

@@ -87,7 +87,8 @@ class Data
   end
 
   def add_album(album)
-    new_album = { id: album.id, publish_date: album.publish_date, on_spotify: album.on_spotify, genre_id: album.genre.id }
+    new_album = { id: album.id, publish_date: album.publish_date, on_spotify: album.on_spotify,
+                  genre_id: album.genre.id }
     if File.exist?('./data/albums.json')
       albums = JSON.parse(File.read('./data/albums.json'))
       albums << new_album

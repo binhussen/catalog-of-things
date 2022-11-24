@@ -1,14 +1,8 @@
 [
   {
-    "id": 406,
-    "publish_date": "12",
-    "on_spotify": false,
-    "genre_id": 104
-  },
-  {
-    "id": 153,
-    "publish_date": "1245",
-    "on_spotify": false,
-    "genre_id": 26
+    "id": 306,
+    "publish_date": "2019-03-04",
+    "on_spotify": true,
+    "genre_id": 275
   }
 ]
