@@ -96,7 +96,6 @@ cd catalog-of-things
 - Twitter: [@DestaWubishet](https://twitter.com/DestaWubishet)
 - LinkedIn: https://www.linkedin.com/in/desta-legesse-w-509844213/
 
-
 👤 **Peter Njuguna**
 
 - GitHub: [@peterboro](https://github.com/peterboro)
@@ -112,6 +111,7 @@ cd catalog-of-things
 <!-- CONTRIBUTING -->
 
 ## 🤝 Contributing <a name="contributing"></a>
+=======
 
 Contributions, issues, and feature requests are welcome!
 
