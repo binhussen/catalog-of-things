@@ -10,4 +10,10 @@ describe Label do
       expect(@label1).to be_instance_of Label
     end
   end
+
+  context 'tests the id method' do
+    it 'should return id' do
+      expect(@label1.id).to eq 10
+    end
+  end
 end

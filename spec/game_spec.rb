@@ -13,20 +13,14 @@ describe Game do
     end
 
     it 'Names should be classof String' do
-      expect(@cj.publish_date).to be_kind_of String
       expect(@near_for_speed.last_played_at).to be_kind_of String
     end
   end
 
   context 'Valid arguments Should be passed' do
-    it 'should return string id' do
+    it 'should return Multiplayer' do
       game = Game.new(1, '2010-10-10', true, '2010-10-10')
-      expect(game.id).to eq 1
-    end
-
-    it 'should return PublishedDate' do
-      game = Game.new(1, '2010-10-10', true, '2010-10-10')
-      expect(game.publish_date).to eq '2010-10-10'
+      expect(game.multiplayer).to eq true
     end
 
     it 'should return last played at' do

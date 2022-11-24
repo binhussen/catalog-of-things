@@ -1,6 +1,7 @@
 require './model/book'
 require './model/game'
 require './model/music_album'
+require './model/genre'
 require './model/author'
 require './model/label'
 require './data'
@@ -10,6 +11,8 @@ class App
     @data = Data.new
     @data.load_authors
     @data.load_games
+    @data.load_albums
+    @data.load_genres
     @data.load_books
     @data.load_labels
   end
@@ -37,10 +40,10 @@ class App
   def add_game
     puts 'Is it multiplayer [Y / N]'
     multiplayer = gets.chomp.downcase == 'y'
-    puts 'Enter last played at in format (YYYY-MM-DD)'
-    last_played_at = Date.parse(gets.chomp)
-    puts 'Enter the publish date in format (YYYY-MM-DD)'
-    publish_date = Date.parse(gets.chomp)
+    puts 'Enter last played at:'
+    last_played_at = gets.chomp
+    puts 'Enter the publish date in:'
+    publish_date = gets.chomp
     new_game = Game.new(nil, publish_date, multiplayer, last_played_at)
     puts "Enter author details\n"
     new_author = add_author
@@ -53,8 +56,8 @@ class App
   def add_book
     puts 'Enter publisher'
     publisher = gets.chomp
-    puts 'Enter publish date in format (YYYY-MM-DD)'
-    publish_date = Date.parse(gets.chomp)
+    puts 'Enter publish date'
+    publish_date = gets.chomp
     puts 'Enter the cover state'
     cover_state = gets.chomp
     new_book = Book.new(nil, publish_date, publisher, cover_state)
@@ -94,12 +97,53 @@ class App
     end
   end
 
+  def add_album
+    puts 'Add New Album'
+    puts 'Publish Date:'
+    date = gets.chomp
+    puts 'On spotify? [Y/N]'
+    spotify = gets.chomp.upcase == 'Y'
+    new_album = MusicAlbum.new(date, spotify, nil)
+    puts "Enter Gener details\n"
+    new_genre = add_genre
+    new_album.add_genre(new_genre)
+    @data.add_album(new_album)
+    @data.albums << new_album
+    puts 'Album created successfully'
+  end
+
+  def add_genre
+    puts "Add Genre\n"
+    puts 'Genre name:'
+    genre_name = gets.chomp
+    new_genre = Genre.new(nil, genre_name)
+    @data.add_genre(new_genre)
+    @data.genres << new_genre
+    new_genre
+  end
+
+  def display_genres
+    return puts 'No genres found' if @data.genres.empty?
+
+    @data.genres.each_with_index do |genre, index|
+      puts "#{index + 1}) Name: #{genre.name}"
+    end
+  end
+
+  def display_albums
+    return puts 'No albums found' if @data.albums.empty?
+
+    @data.albums.each_with_index do |album, index|
+      puts "#{index + 1}) Genre: #{album.genre.name} , On spotify: #{album.on_spotify}"
+      puts "Publish date: #{album.publish_date}"
+    end
+  end
+
   def display_books
     return puts 'No labels found' if @data.books.empty?
 
     @data.books.each_with_index do |book, index|
-      puts "#{index + 1}) Label: #{book.label.title} #{book.label.color}"
-      puts "Publisher: #{book.publisher}, Publish date: #{book.publish_date} Cover_state: #{book.cover_state}"
+      puts "#{index + 1}) Publisher: #{book.publisher}, Publish date: #{book.publish_date}, Cover state: #{book.cover_state}"
     end
   end
 
@@ -107,7 +151,7 @@ class App
     return puts 'No labels found' if @data.labels.empty?
 
     @data.labels.each_with_index do |label, index|
-      puts "#{index + 1}) Id: #{label.id} Title: #{label.title} Color: #{label.color}"
+      puts "#{index + 1}) Title: #{label.title}, Color: #{label.color}"
     end
   end
 end
