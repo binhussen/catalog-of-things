@@ -1,4 +1,4 @@
-require_relative 'app'
+require_relative './app'
 
 class Task
   def initialize
@@ -15,6 +15,7 @@ class Task
     end
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   def do_task(input)
     case input
     when 1 then list_books
@@ -28,4 +29,5 @@ class Task
     when 9 then @app.add_game
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 end

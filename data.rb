@@ -3,6 +3,7 @@ require_relative './model/author'
 require_relative './model/game'
 require_relative './model/music_album'
 require_relative './model/genre'
+
 class Data
   attr_accessor :games, :authors, :albums, :genres, :books, :labels
 

@@ -140,8 +140,7 @@ class App
     return puts 'No labels found' if @data.books.empty?
 
     @data.books.each_with_index do |book, index|
-      puts "#{index + 1}) Label: #{book.label.title} #{book.label.color}"
-      puts "Publisher: #{book.publisher}, Publish date: #{book.publish_date} Cover_state: #{book.cover_state}"
+      puts "#{index + 1}) Publisher: #{book.publisher}, Publish date: #{book.publish_date}, Cover state: #{book.cover_state}"
     end
   end
 
@@ -149,7 +148,7 @@ class App
     return puts 'No labels found' if @data.labels.empty?
 
     @data.labels.each_with_index do |label, index|
-      puts "#{index + 1}) Id: #{label.id} Title: #{label.title} Color: #{label.color}"
+      puts "#{index + 1}) Title: #{label.title}, Color: #{label.color}"
     end
   end
 end
