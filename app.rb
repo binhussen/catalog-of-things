@@ -125,8 +125,7 @@ class App
     return puts 'No albums found' if @data.albums.empty?
 
     @data.albums.each_with_index do |album, index|
-      puts "#{index + 1}) Genre: #{album.genre.name} , On spotify: #{album.on_spotify}"
-      puts "Publish date: #{album.publish_date}"
+      puts "#{index + 1}) On spotify: #{album.on_spotify} Publish date: #{album.publish_date}"
     end
   end
 
@@ -134,8 +133,8 @@ class App
     return puts 'No books found' if @data.books.empty?
 
     @data.books.each_with_index do |book, index|
-      puts "#{index + 1})Publisher: #{book.publisher}"
-      puts "Cover state: #{book.cover_state}, Publish date: #{book.publish_date}"
+      puts "#{index + 1} Publisher: #{book.publisher} Cover state: #{book.cover_state},
+       Publish date: #{book.publish_date}"
     end
   end
 
