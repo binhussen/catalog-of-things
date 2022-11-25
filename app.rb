@@ -17,23 +17,14 @@ class App
     @data.load_labels
   end
 
-  def inputs(show)
-    outputs = []
-    show.each do |s|
-      print s
-      outputs.push(gets.chomp)
-    end
-    outputs
-  end
-
   def add_author
     puts 'Enter first name'
     first_name = gets.chomp
     puts 'Enter last name'
     last_name = gets.chomp
     new_author = Author.new(nil, first_name, last_name)
-    @data.add_author(new_author)
     @data.authors << new_author
+    @data.add_author(new_author)
     new_author
   end
 
@@ -48,8 +39,8 @@ class App
     puts "Enter author details\n"
     new_author = add_author
     new_game.add_author(new_author)
-    @data.add_game(new_game)
     @data.games << new_game
+    @data.add_game(new_game)
     puts 'Game created successfully'
   end
 
@@ -64,8 +55,8 @@ class App
     puts "Enter label details\n"
     new_label = add_label
     new_book.add_label(new_label)
-    @data.add_book(new_book)
     @data.books << new_book
+    @data.add_book(new_book)
     puts 'Book created successfully'
   end
 
@@ -75,8 +66,8 @@ class App
     puts 'Enter color'
     color = gets.chomp
     new_label = Label.new(nil, title, color)
-    @data.add_label(new_label)
     @data.labels << new_label
+    @data.add_label(new_label)
     new_label
   end
 
@@ -107,8 +98,8 @@ class App
     puts "Enter Gener details\n"
     new_genre = add_genre
     new_album.add_genre(new_genre)
-    @data.add_album(new_album)
     @data.albums << new_album
+    @data.add_album(new_album)
     puts 'Album created successfully'
   end
 
@@ -117,8 +108,8 @@ class App
     puts 'Genre name:'
     genre_name = gets.chomp
     new_genre = Genre.new(nil, genre_name)
-    @data.add_genre(new_genre)
     @data.genres << new_genre
+    @data.add_genre(new_genre)
     new_genre
   end
 
@@ -143,8 +134,8 @@ class App
     return puts 'No books found' if @data.books.empty?
 
     @data.books.each_with_index do |book, index|
-      puts "#{index + 1}) Publisher: #{book.publisher}, Publish date: #{book.publish_date},"
-      puts "Cover state: #{book.cover_state}"
+      puts "#{index + 1})Publisher: #{book.publisher}"
+      puts "Cover state: #{book.cover_state}, Publish date: #{book.publish_date}"
     end
   end
 

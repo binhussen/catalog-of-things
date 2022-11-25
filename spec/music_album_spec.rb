@@ -1,15 +1,16 @@
 require_relative '../model/music_album'
 
 describe MusicAlbum do
-  describe '#can_be_archived?' do
-    it 'returns false if the item is not on spotify' do
-      music_album = MusicAlbum.new('2019-01-01', false, false)
-      expect(music_album.can_be_archived?).to eq(false)
-    end
+  before :each do
+    @album = MusicAlbum.new('2001-03-05', true, nil)
+  end
 
-    it 'returns true if the item is on spotify' do
-      music_album = MusicAlbum.new('2019-01-01', true, false)
-      expect(music_album.can_be_archived?).to eq(false)
-    end
+  it 'can be moved to archive' do
+    @album.move_to_archive
+    expect(@album.archived).to be true
+  end
+
+  it 'checks published date' do
+    expect(@album.publish_date).to eq('2001-03-05')
   end
 end
